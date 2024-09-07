@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormBuilder, FormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
+import {Login} from "../login";
+import {LoginService} from "../login.service";
 
 @Component({
   selector: 'app-login',
@@ -24,9 +26,11 @@ export class LoginComponent {
     password: '',
   }
 
+  constructor(private loginService: LoginService) {}
+
   router =  inject(Router);
 
-  onRegister() {
+  /*onRegister() {
     debugger;
     const isLocalData = localStorage.getItem("angular18Local");
     if(isLocalData != null) {
@@ -38,10 +42,11 @@ export class LoginComponent {
       localArray.push(this.userRegisterObj);
       localStorage.setItem("angular18Local",JSON.stringify(localArray))
     }
-    alert("Registration Success");
-  }
+    this.isLoginView = true;
+    alert("Registration Success,please login");
+  } */
 
-  onLogin() {
+  /*onLogin() {
     debugger;
     const isLocalData = localStorage.getItem("angular18Local");
     if(isLocalData != null) {
@@ -56,5 +61,29 @@ export class LoginComponent {
     } else {
       alert("No User Found")
     }
+  } */
+
+  sendLogin(){
+    const login:Login ={
+      name:this.userLogin.userName,
+      email:this.userLogin.emailId,
+      password:this.userLogin.password,
+    }
+    this.loginService.postLogin(login);
+  }
+
+  CompareLogin() {
+    // Call getLogin to compare username and password
+    this.loginService.getLogin(this.userLogin.userName, this.userLogin.password).subscribe(
+      response => {
+        // Handle successful login here
+        console.log('Login successful', response);
+      },
+      error => {
+        // Handle error here
+        alert("LOGIN FAILED");
+        console.error('Login failed', error);
+      }
+    );
   }
 }
