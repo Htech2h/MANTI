@@ -78,6 +78,7 @@ export class LoginComponent {
       response => {
         // Handle successful login here
         console.log('Login successful', response);
+        this.router.navigateByUrl('profile');
       },
       error => {
         // Handle error here
