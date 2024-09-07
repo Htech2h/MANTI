@@ -45,11 +45,11 @@ export class LoginComponent {
     debugger;
     const isLocalData = localStorage.getItem("angular18Local");
     if(isLocalData != null) {
-      const users = JSON.parse(isLocalData); 
+      const users = JSON.parse(isLocalData);
 
       const isUserFound =  users.find((m:any)=> m.userName == this.userLogin.userName && m.password == this.userLogin.password);
       if(isUserFound != undefined) {
-        this.router.navigateByUrl('dashboard')
+        this.router.navigateByUrl('profile')
       } else {
         alert("User name or password is Wrong")
       }
